@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronômetro</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color:cadetblue;
+}
+
+.container {
+    text-align: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#display {
+    font-size: 3em;
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: rgb(16, 140, 172);
+    color: #fff;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: rgb(83, 3, 3);
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cronômetro</h1>
+        <div id="display">00:00:00</div>
+        <div class="buttons">
+            <button id="start">Iniciar</button>
+            <button id="stop">Parar</button>
+            <button id="reset">Zerar</button>
+        </div>
+    </div>
+    <script>
+        let startButton = document.getElementById('start');
+let stopButton = document.getElementById('stop');
+let resetButton = document.getElementById('reset');
+let display = document.getElementById('display');
+
+let timer;
+let seconds = 0;
+let isRunning = false;
+
+function formatTime(sec) {
+    let hrs = Math.floor(sec / 3600);
+    let mins = Math.floor((sec % 3600) / 60);
+    let secs = sec % 60;
+    
+    return `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+}
+
+function startTimer() {
+    if (isRunning) return;
+    isRunning = true;
+    timer = setInterval(() => {
+        seconds++;
+        display.textContent = formatTime(seconds);
+    }, 1000);
+}
+
+function stopTimer() {
+    clearInterval(timer);
+    isRunning = false;
+}
+
+function resetTimer() {
+    clearInterval(timer);
+    isRunning = false;
+    seconds = 0;
+    display.textContent = formatTime(seconds);
+}
+
+startButton.addEventListener('click', startTimer);
+stopButton.addEventListener('click', stopTimer);
+resetButton.addEventListener('click', resetTimer);
+
+    </script>
+</body>
+</html>
